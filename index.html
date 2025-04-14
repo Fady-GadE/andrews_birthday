@@ -5,7 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Andrew</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: white;
+      text-shadow: 2px 2px 5px #000;
+      overflow: hidden;
+    }
+
+        body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -37,7 +47,11 @@
 
     h1 {
       font-size: 2em;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
+    }
+
+    h2 {
+      margin-top: 0;
     }
 
     .redeem-btn {
@@ -57,17 +71,15 @@
       transform: scale(1.1);
     }
 
-    /* Popup styles */
     .popup {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
       z-index: 999;
-      display: none;
     }
 
     .popup-content {
@@ -116,21 +128,41 @@
   <div class="popup" id="popup">
     <div class="popup-content">
       <h2>🎁 Your Robux Code</h2>
-      <div class="code-box" id="codeBox">x</div>
-      <div class="code-box" id="codeBox">x</div>
+      <div class="code-box" id="codeBox1">Loading...</div>
+      <div class="code-box" id="codeBox2">Loading...</div>
       <button class="copy-btn" onclick="copyCode()">Copy Code</button>
       <button onclick="goToRedeem()">Go to Redeem</button>
     </div>
   </div>
 
   <script>
-    function showPopup() {
+    async function fetchTXT(domain) {
+      const url = `https://cloudflare-dns.com/dns-query?name=${domain}&type=TXT`;
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/dns-json'
+        }
+      });
+      const data = await response.json();
+      const txt = data.Answer?.find(record => record.type === 16);
+      return txt ? txt.data.replace(/^"|"$/g, '') : 'Error loading';
+    }
+
+    async function showPopup() {
       document.getElementById('popup').style.display = 'flex';
+
+      // Fetch TXT records
+      const rcode = await fetchTXT("rcode.project-zero.site");
+      const scode = await fetchTXT("scode.project-zero.site");
+
+      // Display codes
+      document.getElementById('codeBox1').innerText = rcode;
+      document.getElementById('codeBox2').innerText = scode;
     }
 
     function copyCode() {
-      const codeText = document.getElementById('codeBox').innerText;
-      navigator.clipboard.writeText(codeText).then(() => {
+      const code1 = document.getElementById('codeBox1').innerText;
+      navigator.clipboard.writeText(`${code1}}`).then(() => {
         alert("Code copied!");
       });
     }
