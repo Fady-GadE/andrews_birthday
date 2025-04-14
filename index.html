@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Andrew</title>
+  <style>
+    body {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+        background-image: url('https://wallpapercave.com/wp/wp6204950.jpg');
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-size: cover;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+
+    .card {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 2em;
+      border-radius: 20px;
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 1em;
+    }
+
+    .redeem-btn {
+      background-color: yellow;
+      color: black;
+      padding: 1em 2em;
+      font-size: 1.5em;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .redeem-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Popup styles */
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      display: none;
+    }
+
+    .popup-content {
+      background: #222;
+      padding: 2em;
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+      max-width: 90%;
+    }
+
+    .code-box {
+      background: #444;
+      padding: 1em;
+      margin: 1em 0;
+      border-radius: 10px;
+      font-size: 1.2em;
+      user-select: all;
+    }
+
+    .popup button {
+      margin-top: 1em;
+      background-color: #00ff88;
+      color: #000;
+      border: none;
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .popup button.copy-btn {
+      background: #ffcc00;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎉 HAPPY BIRTHDAY ANDREW! 🎂</h1>
+    <h2>10 DOLLARS IN ROBLOX</h2>
+    <p>You’ve unlocked your Robux reward!</p>
+    <button class="redeem-btn" onclick="showPopup()">REDEEM</button>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>🎁 Your Robux Code</h2>
+      <div class="code-box" id="codeBox">x</div>
+      <div class="code-box" id="codeBox">x</div>
+      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+      <button onclick="goToRedeem()">Go to Redeem</button>
+    </div>
+  </div>
+
+  <script>
+    function showPopup() {
+      document.getElementById('popup').style.display = 'flex';
+    }
+
+    function copyCode() {
+      const codeText = document.getElementById('codeBox').innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        alert("Code copied!");
+      });
+    }
+
+    function goToRedeem() {
+      window.location.href = "https://www.roblox.com/redeem";
+    }
+  </script>
+</body>
+</html>
